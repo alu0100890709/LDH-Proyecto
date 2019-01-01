@@ -55,7 +55,7 @@ public class TinyYoloModel {
         return yolo;
     }
     
-    /**
+    /** 
      * 
      * @return Tabla formateada del Modelo de Entrenamiento
      */
