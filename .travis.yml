@@ -1,0 +1,26 @@
+language: java
+sudo: false
+dist: trusty
+install: true
+addons:
+  sonarcloud:
+    organization: "ldh-yolo-team"
+    token:
+      secure: "2111eb579d4959d145da2959cf915f82275b3160"
+jdk:
+  - oraclejdk8
+script:
+# the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+#JaCoCo is used to have code coverage, the agent has to be activated
+  - mvn clean test org.jacoco:jacoco-maven-plugin:prepare-agent package javadoc:javadoc
+  - sonar-scanner
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+notifications:
+  email: 
+  recipients:
+    - dcastell@ull.es
+on_success: always
+on_failure: always
