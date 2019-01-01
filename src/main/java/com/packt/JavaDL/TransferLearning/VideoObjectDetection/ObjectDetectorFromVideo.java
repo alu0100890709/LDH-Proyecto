@@ -4,10 +4,15 @@ import static org.bytedeco.javacpp.opencv_highgui.destroyAllWindows;
 import static org.bytedeco.javacpp.opencv_highgui.imshow;
 import static org.bytedeco.javacpp.opencv_highgui.waitKey;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.concurrent.atomic.AtomicReferenceArray;
+
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
+
+import scala.concurrent.stm.skel.AtomicArray;
 /**
  * LDH Proyecto final
  * ObjectDetectorFromVideo.java
@@ -17,7 +22,7 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  * @version 1.0.0 22/11/2018
  */
 public class ObjectDetectorFromVideo {
-    private volatile Mat[] v = new Mat[1];
+	private AtomicReferenceArray v  = new AtomicReferenceArray(new Mat[1]);
     private String windowName;
 
 	/** Metodo main de la clase */
@@ -49,9 +54,9 @@ public class ObjectDetectorFromVideo {
             for(int i = 1; i < frameGrabber.getLengthInFrames(); i+=(int)frameRate) {
                 frameGrabber.setFrameNumber(i);
                 frame = frameGrabber.grab();
-                v[0] = new OpenCVFrameConverter.ToMat().convert(frame);
-                model.markObjectWithBoundingBox(v[0], frame.imageWidth, frame.imageHeight, true, windowName);
-                imshow(windowName, v[0]);
+                v.set(0, new OpenCVFrameConverter.ToMat().convert(frame));
+                model.markObjectWithBoundingBox((Mat) v.get(0), frame.imageWidth, frame.imageHeight, true, windowName);
+                imshow(windowName, (Mat) v.get(0));
 
                 char key = (char) waitKey(20);
                 // Exit on escape:
