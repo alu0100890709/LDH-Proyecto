@@ -19,7 +19,7 @@ travis_fold_start() {
 }
 
 travis_fold_end() {
-  travis_fold end `cat ${TMP}`
+  #travis_fold end `cat ${TMP}`
 }
 
 #--------------------------------------------------------------------------------
