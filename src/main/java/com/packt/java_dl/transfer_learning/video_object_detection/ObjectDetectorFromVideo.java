@@ -93,7 +93,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
         Frame frame;
         double frameRate = frameGrabber.getFrameRate();
         ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has {} frames", frameGrabber.getLengthInFrames());
-        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of %f ", frameRate);
+        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of {0} ", frameRate);
 
         try {
             for(int i = 1; i < frameGrabber.getLengthInFrames(); i+=(int)frameRate) {
@@ -125,7 +125,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			path = file.getAbsolutePath();
-			ObjectDetectorFromVideo.logger.log(Level.CONFIG, TinyYoloModel.getSummary());
+			ObjectDetectorFromVideo.logger.log(Level.CONFIG, model.getSummary());
 	        try {
 				new ObjectDetectorFromVideo().startRealTimeVideoDetection(path, model);
 			} catch (Exception e1) {

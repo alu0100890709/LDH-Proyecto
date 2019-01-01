@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.opencv_highgui.imshow;
@@ -29,7 +30,7 @@ import static org.bytedeco.javacpp.opencv_imgproc.rectangle;
  */
 public class TinyYoloModel {
 
-    private static ComputationGraph model;
+    private ComputationGraph model;
     private List<DetectedObject> predictedObjects;
     private HashMap<Integer, String> labels;
 
@@ -41,7 +42,7 @@ public class TinyYoloModel {
             model = (ComputationGraph) new TinyYOLO().initPretrained();
             createObjectLabels();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+        	ObjectDetectorFromVideo.logger.log(Level.SEVERE, "error de runtime", e);
         }
     }
     
@@ -59,7 +60,7 @@ public class TinyYoloModel {
      * 
      * @return Tabla formateada del Modelo de Entrenamiento
      */
-    public static String getSummary() {
+    public String getSummary() {
         return model.summary();
     }
 
