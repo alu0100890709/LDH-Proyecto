@@ -46,7 +46,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 	}
     
     
-    public void createJFrame() throws java.lang.Exception {
+    public void createJFrame() {
         
         
         panelContenido = new JPanel();
@@ -92,8 +92,8 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 
         Frame frame;
         double frameRate = frameGrabber.getFrameRate();
-        ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has " + frameGrabber.getLengthInFrames() + " frames");
-        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of " + frameRate);
+        ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has {} frames", frameGrabber.getLengthInFrames());
+        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of {} ", frameRate);
 
         try {
             for(int i = 1; i < frameGrabber.getLengthInFrames(); i+=(int)frameRate) {
