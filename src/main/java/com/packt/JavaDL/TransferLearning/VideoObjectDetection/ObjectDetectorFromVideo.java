@@ -30,7 +30,7 @@ public class ObjectDetectorFromVideo {
     }
     
     /**
-     * @brief Lanza la aplicación que detecta objetos en videos
+     * Lanza la aplicación que detecta objetos en videos
      * @param videoFileName dirección del video en el que detectar cosas
      * @param model modelo entrenado
      * @throws java.lang.Exception

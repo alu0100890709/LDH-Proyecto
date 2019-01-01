@@ -34,7 +34,7 @@ public class TinyYoloModel {
     private HashMap<Integer, String> labels;
 
     /**
-     * @brief constructor de la clase Tiny yolo model
+     * constructor de la clase Tiny yolo model
      */
     private TinyYoloModel() {
         try {
@@ -48,7 +48,7 @@ public class TinyYoloModel {
     static final TinyYoloModel yolo = new TinyYoloModel();   
 
     /**
-     * @brief devuelve el modelo de entrenamiento
+     * devuelve el modelo de entrenamiento
      * @return Modelo de Entrenamiento
      */
     public static TinyYoloModel getPretrainedModel() {
@@ -64,7 +64,7 @@ public class TinyYoloModel {
     }
 
     /**
-     * @brief Marca los objetos detectados en las imágenes
+     * Marca los objetos detectados en las imágenes
      * @param file
      * @param imageWidth
      * @param imageHeight
@@ -93,7 +93,7 @@ public class TinyYoloModel {
     }
 
     /**
-     * @brief Extrae imágenes de los fotogramas del vídeo analizado 
+     * Extrae imágenes de los fotogramas del vídeo analizado 
      * la procesa y las almacena en un array consumible por el modelo 
      * @param file
      * @param width
@@ -110,7 +110,7 @@ public class TinyYoloModel {
     }
 
     /**
-     * @brief Crea las etiquetas de los objetos a detectar
+     * Crea las etiquetas de los objetos a detectar
      */
     void createObjectLabels() {
         if (labels == null) {
