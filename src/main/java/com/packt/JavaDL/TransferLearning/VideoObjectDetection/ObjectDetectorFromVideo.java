@@ -7,11 +7,8 @@ import static org.bytedeco.javacpp.opencv_highgui.waitKey;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.atomic.AtomicIntegerArray;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +22,6 @@ import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameConverter;
-
-import scala.concurrent.stm.skel.AtomicArray;
 /**
  * LDH Proyecto final
  * ObjectDetectorFromVideo.java
@@ -43,7 +38,6 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 	String path;
 	private final JFileChooser fc = new JFileChooser();
 	public static final Logger logger = Logger.getLogger("log");
-    private String windowName;
 
 	/** Metodo main de la clase */
     public static void main( String[] args ) throws Exception
@@ -92,14 +86,14 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
      * @throws java.lang.Exception
      */
     public void startRealTimeVideoDetection(String videoFileName, TinyYoloModel model) throws java.lang.Exception {
-        windowName = "Object Detection from Video";
+    	String windowName = "Object Detection from Video";
         FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoFileName);
         frameGrabber.start();
 
         Frame frame;
         double frameRate = frameGrabber.getFrameRate();
-        System.out.println("The inputted video clip has " + frameGrabber.getLengthInFrames() + " frames");
-        System.out.println("The inputted video clip has frame rate of " + frameRate);
+        ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has " + frameGrabber.getLengthInFrames() + " frames");
+        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of " + frameRate);
 
         try {
             for(int i = 1; i < frameGrabber.getLengthInFrames(); i+=(int)frameRate) {
@@ -136,11 +130,10 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 	        try {
 				new ObjectDetectorFromVideo().startRealTimeVideoDetection(path, model);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				ObjectDetectorFromVideo.logger.log(Level.WARNING, "No se pudo abrir el documento", e1);
 			}
 		} else {
-			System.out.println("Open command cancelled by user.");
+			ObjectDetectorFromVideo.logger.log(Level.INFO, "Open command cancelled by user.");
 		}
 		
 	}
