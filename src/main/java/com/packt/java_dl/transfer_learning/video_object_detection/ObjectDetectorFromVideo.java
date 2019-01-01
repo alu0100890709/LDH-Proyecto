@@ -84,7 +84,6 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
      * @param videoFileName dirección del video en el que detectar cosas
      * @param model modelo entrenado
      * @throws org.bytedeco.javacv.FrameGrabber.Exception 
-     * @throws java.lang.Exception
      */
     public void startRealTimeVideoDetection(String videoFileName, TinyYoloModel model) throws org.bytedeco.javacv.FrameGrabber.Exception {
     	String windowName = "Object Detection from Video";

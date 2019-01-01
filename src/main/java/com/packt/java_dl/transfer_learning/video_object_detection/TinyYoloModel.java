@@ -71,7 +71,6 @@ public class TinyYoloModel {
      * @param newBoundingBOx
      * @param winName
      * @throws IOException 
-     * @throws Exception
      */
     public void markObjectWithBoundingBox(Mat file, int imageWidth, int imageHeight, boolean newBoundingBOx,String winName) throws IOException {
         int W = 640; // width of the video frame 
