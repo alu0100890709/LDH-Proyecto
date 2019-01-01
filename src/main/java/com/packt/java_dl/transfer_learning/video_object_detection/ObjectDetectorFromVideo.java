@@ -83,9 +83,10 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
      * Lanza la aplicación que detecta objetos en videos
      * @param videoFileName dirección del video en el que detectar cosas
      * @param model modelo entrenado
+     * @throws org.bytedeco.javacv.FrameGrabber.Exception 
      * @throws java.lang.Exception
      */
-    public void startRealTimeVideoDetection(String videoFileName, TinyYoloModel model) throws java.lang.Exception {
+    public void startRealTimeVideoDetection(String videoFileName, TinyYoloModel model) throws org.bytedeco.javacv.FrameGrabber.Exception {
     	String windowName = "Object Detection from Video";
         FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoFileName);
         frameGrabber.start();
@@ -100,7 +101,11 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
                 frameGrabber.setFrameNumber(i);
                 frame = frameGrabber.grab();
                 v.set(0, new OpenCVFrameConverter.ToMat().convert(frame));
-                model.markObjectWithBoundingBox((Mat) v.get(0), frame.imageWidth, frame.imageHeight, true, windowName);
+                try {
+					model.markObjectWithBoundingBox((Mat) v.get(0), frame.imageWidth, frame.imageHeight, true, windowName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
                 imshow(windowName, (Mat) v.get(0));
 
                 char key = (char) waitKey(20);
