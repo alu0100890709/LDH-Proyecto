@@ -27,7 +27,7 @@ travis_fold_end() {
 
 (
   travis_fold_start MAVEN
-  mvn clean test org.jacoco:jacoco-maven-plugin:prepare-agent package javadoc:javadoc
+  mvn -q clean test org.jacoco:jacoco-maven-plugin:prepare-agent package javadoc:javadoc
   travis_fold_end
 )
 
