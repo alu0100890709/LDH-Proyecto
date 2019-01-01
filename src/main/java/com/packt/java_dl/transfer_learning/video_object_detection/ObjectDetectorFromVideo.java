@@ -40,7 +40,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 	public static final Logger logger = Logger.getLogger("log");
 
 	/** Metodo main de la clase */
-    public static void main( String[] args ) throws Exception
+    public static void main( String[] args )
 	{
 		new ObjectDetectorFromVideo().createJFrame();
 	}
@@ -93,18 +93,14 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
         Frame frame;
         double frameRate = frameGrabber.getFrameRate();
         ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has {} frames", frameGrabber.getLengthInFrames());
-        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of {} ", frameRate);
+        ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of %f ", frameRate);
 
         try {
             for(int i = 1; i < frameGrabber.getLengthInFrames(); i+=(int)frameRate) {
                 frameGrabber.setFrameNumber(i);
                 frame = frameGrabber.grab();
                 v.set(0, new OpenCVFrameConverter.ToMat().convert(frame));
-                try {
-					model.markObjectWithBoundingBox((Mat) v.get(0), frame.imageWidth, frame.imageHeight, true, windowName);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				model.markObjectWithBoundingBox((Mat) v.get(0), frame.imageWidth, frame.imageHeight, true, windowName);
                 imshow(windowName, (Mat) v.get(0));
 
                 char key = (char) waitKey(20);
@@ -123,14 +119,13 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		TinyYoloModel model = TinyYoloModel.getPretrainedModel();
 		int returnVal = fc.showOpenDialog(panelContenido);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			path = file.getAbsolutePath();
-			System.out.println(TinyYoloModel.getSummary());
+			ObjectDetectorFromVideo.logger.log(Level.CONFIG, TinyYoloModel.getSummary());
 	        try {
 				new ObjectDetectorFromVideo().startRealTimeVideoDetection(path, model);
 			} catch (Exception e1) {
