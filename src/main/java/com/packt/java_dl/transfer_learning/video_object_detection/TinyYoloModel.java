@@ -1,4 +1,4 @@
-package com.packt.JavaDL.TransferLearning.VideoObjectDetection;
+package com.packt.java_dl.transfer_learning.video_object_detection;
 
 import org.datavec.image.loader.NativeImageLoader;
 import org.deeplearning4j.nn.graph.ComputationGraph;

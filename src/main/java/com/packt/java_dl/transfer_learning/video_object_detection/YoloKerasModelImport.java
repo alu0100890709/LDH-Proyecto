@@ -1,4 +1,4 @@
-package com.packt.JavaDL.TransferLearning.VideoObjectDetection;
+package com.packt.java_dl.transfer_learning.video_object_detection;
 
 import java.io.IOException;
 
