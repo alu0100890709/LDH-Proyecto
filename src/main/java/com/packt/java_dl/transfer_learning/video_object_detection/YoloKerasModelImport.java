@@ -37,29 +37,30 @@ public class YoloKerasModelImport {
 	
 	/** Metodo main de la clase */
 	public static void main(String[] args)
-			throws IOException, UnsupportedKerasConfigurationException, InvalidKerasConfigurationException {
+			throws IOException, InvalidKerasConfigurationException {
 		String pretrainedModelPath = "bin/yolo.h5";
-		ComputationGraph network = KerasModelImport.importKerasModelAndWeights(pretrainedModelPath);
+		ComputationGraph network;
+		try {
+			network = KerasModelImport.importKerasModelAndWeights(pretrainedModelPath);
+			ModelSerializer.writeModel(network, "bin/Yolo_v3.zip", false);
 
-		ModelSerializer.writeModel(network, "bin/Yolo_v3.zip", false);
+			ComputationGraph graph = KerasModelImport.importKerasModelAndWeights(pretrainedModelPath, false);
+			INDArray priors = Nd4j.create(priorBoxes);
+			FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder().seed(seed)
+					.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
+					.gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).gradientNormalizationThreshold(1.0)
+					.updater(new Adam.Builder().learningRate(1e-3).build()).l2(0.00001).activation(Activation.IDENTITY)
+					.trainingWorkspaceMode(workspaceMode).inferenceWorkspaceMode(workspaceMode).build();
 
-		ComputationGraph graph = KerasModelImport.importKerasModelAndWeights(pretrainedModelPath, false);
-		INDArray priors = Nd4j.create(priorBoxes);
+			ComputationGraph model = new TransferLearning.GraphBuilder(graph).fineTuneConfiguration(fineTuneConf)
+					.addLayer("outputs", new Yolo2OutputLayer.Builder().boundingBoxPriors(priors).build(), "conv2d_9")
+					.setOutputs("outputs").build();
+			ObjectDetectorFromVideo.logger.log(Level.INFO,model.summary(InputType.convolutional(416, 416, 3)));
 
-		FineTuneConfiguration fineTuneConf = new FineTuneConfiguration.Builder().seed(seed)
-				.optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
-				.gradientNormalization(GradientNormalization.RenormalizeL2PerLayer).gradientNormalizationThreshold(1.0)
-				.updater(new Adam.Builder().learningRate(1e-3).build()).l2(0.00001).activation(Activation.IDENTITY)
-				.trainingWorkspaceMode(workspaceMode).inferenceWorkspaceMode(workspaceMode).build();
-
-		ComputationGraph model = new TransferLearning.GraphBuilder(graph).fineTuneConfiguration(fineTuneConf)
-				.addLayer("outputs", new Yolo2OutputLayer.Builder().boundingBoxPriors(priors).build(), "conv2d_9")
-				.setOutputs("outputs").build();
-
-		ObjectDetectorFromVideo.logger.log(Level.INFO,model.summary(InputType.convolutional(416, 416, 3)));
-
-		ModelSerializer.writeModel(model, "bin/Yolo_v3.zip", false);
-
+			ModelSerializer.writeModel(model, "bin/Yolo_v3.zip", false);
+		} catch (UnsupportedKerasConfigurationException e) {
+			ObjectDetectorFromVideo.logger.log(Level.WARNING,"La configuración de Keras no es valida",e);
+		}
 	}
 
 }
