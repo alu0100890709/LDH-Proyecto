@@ -31,12 +31,11 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  * @version 1.0.0 22/11/2018
  */
 
-public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
+public class ObjectDetectorFromVideo extends JFrame {
 	private AtomicReferenceArray v  = new AtomicReferenceArray(new Mat[1]);
     JPanel panelContenido;
 	JButton documentSelector;
-	String path;
-	private final JFileChooser fc = new JFileChooser();
+	ActionListenerForODFV al;
 	public static final Logger logger = Logger.getLogger("log");
 
 	/** Metodo main de la clase */
@@ -50,6 +49,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
         
         
         panelContenido = new JPanel();
+        al = new ActionListenerForODFV(panelContenido);
 		GroupLayout layout = new GroupLayout(panelContenido);
 		panelContenido.setLayout(layout);
 		layout.setAutoCreateGaps(true);
@@ -57,7 +57,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 		documentSelector = new JButton("Seleccione video a analizar");
 			
 			
-		documentSelector.addActionListener(this);
+		documentSelector.addActionListener(al);
 			
 			
 			
@@ -117,10 +117,21 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
         }
         frameGrabber.close();
     }
+	
+}
+
+class ActionListenerForODFV implements ActionListener{
+	private final JFileChooser fc = new JFileChooser();
+	protected String path;
+	private JPanel panelPadre;
+	
+	ActionListenerForODFV(JPanel panelPadre){
+		this.panelPadre = panelPadre;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		TinyYoloModel model = TinyYoloModel.getPretrainedModel();
-		int returnVal = fc.showOpenDialog(panelContenido);
+		int returnVal = fc.showOpenDialog(panelPadre);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
