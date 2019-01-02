@@ -85,7 +85,7 @@ public class TinyYoloModel {
             INDArray indArray = prepareImage(file, w, h);
             INDArray results = model.outputSingle(indArray);
             predictedObjects = outputLayer.getPredictedObjects(results, dT);
-            ObjectDetectorFromVideo.logger.log(Level.CONFIG , "results = {}", predictedObjects);
+            ObjectDetectorFromVideo.logger.log(Level.INFO , "results = {0}", predictedObjects);
             markObjectWithBoundingBox(file, gW, gH, imageWidth, imageHeight);
         } else {
         	markObjectWithBoundingBox(file, gW, gH, imageWidth, imageHeight);

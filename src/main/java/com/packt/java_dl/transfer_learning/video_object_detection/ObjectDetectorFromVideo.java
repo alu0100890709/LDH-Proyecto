@@ -92,7 +92,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
 
         Frame frame;
         double frameRate = frameGrabber.getFrameRate();
-        ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has {} frames", frameGrabber.getLengthInFrames());
+        ObjectDetectorFromVideo.logger.log(Level.INFO,"The inputted video clip has {0} frames", frameGrabber.getLengthInFrames());
         ObjectDetectorFromVideo.logger.log(Level.INFO, "The inputted video clip has frame rate of {0} ", frameRate);
 
         try {

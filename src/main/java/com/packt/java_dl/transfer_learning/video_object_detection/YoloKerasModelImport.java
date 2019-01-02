@@ -1,6 +1,7 @@
 package com.packt.java_dl.transfer_learning.video_object_detection;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import org.deeplearning4j.nn.api.OptimizationAlgorithm;
 import org.deeplearning4j.nn.conf.GradientNormalization;
@@ -42,7 +43,6 @@ public class YoloKerasModelImport {
 
 		ModelSerializer.writeModel(network, "bin/Yolo_v3.zip", false);
 
-		String filename = "tiny-yolo-voc.h5";
 		ComputationGraph graph = KerasModelImport.importKerasModelAndWeights(pretrainedModelPath, false);
 		INDArray priors = Nd4j.create(priorBoxes);
 
@@ -56,7 +56,7 @@ public class YoloKerasModelImport {
 				.addLayer("outputs", new Yolo2OutputLayer.Builder().boundingBoxPriors(priors).build(), "conv2d_9")
 				.setOutputs("outputs").build();
 
-		System.out.println(model.summary(InputType.convolutional(416, 416, 3)));
+		ObjectDetectorFromVideo.logger.log(Level.INFO,model.summary(InputType.convolutional(416, 416, 3)));
 
 		ModelSerializer.writeModel(model, "bin/Yolo_v3.zip", false);
 
