@@ -22,7 +22,7 @@ cache:
 notifications:
   email: 
   recipients:
-    - dcastell@ull.es
+    - eumadeinchina@gmail.com
 on_success: always
 on_failure: always
 before_install:
