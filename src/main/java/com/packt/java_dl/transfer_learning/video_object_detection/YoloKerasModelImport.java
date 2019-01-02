@@ -28,8 +28,8 @@ import org.nd4j.linalg.learning.config.Adam;
  * @version 1.0.0 21/11/2018
  */
 public class YoloKerasModelImport {
-	public static int nBoxes = 5;
-	public static double[][] priorBoxes = { { 1.08, 1.19 }, { 3.42, 4.41 }, { 6.63, 11.38 }, { 9.42, 5.11 },
+	public static final int nBoxes = 5;
+	protected static final double[][] priorBoxes = { { 1.08, 1.19 }, { 3.42, 4.41 }, { 6.63, 11.38 }, { 9.42, 5.11 },
 			{ 16.62, 10.52 } };
 
 	private static long seed;

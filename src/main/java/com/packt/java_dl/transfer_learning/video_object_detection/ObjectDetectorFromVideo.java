@@ -111,7 +111,7 @@ public class ObjectDetectorFromVideo extends JFrame implements ActionListener {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+        	ObjectDetectorFromVideo.logger.log(Level.WARNING, "Error de entrada y salida", e);
         } finally {
             frameGrabber.stop();
         }
