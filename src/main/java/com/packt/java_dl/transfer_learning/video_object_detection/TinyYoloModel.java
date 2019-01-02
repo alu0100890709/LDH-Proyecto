@@ -74,18 +74,18 @@ public class TinyYoloModel {
      * @throws IOException 
      */
     public void markObjectWithBoundingBox(Mat file, int imageWidth, int imageHeight, boolean newBoundingBOx,String winName) throws IOException {
-        int W = 640; // width of the video frame 
-        int H = 360; // Height of the video frame
+        int w = 640; // width of the video frame 
+        int h = 360; // Height of the video frame
         int gW = 13; // Grid width
         int gH = 13; // Grid Height
         double dT = 0.5; // Detection threshold
 
         Yolo2OutputLayer outputLayer = (Yolo2OutputLayer) model.getOutputLayer(0);
         if (newBoundingBOx) {
-            INDArray indArray = prepareImage(file, W, H);
+            INDArray indArray = prepareImage(file, w, h);
             INDArray results = model.outputSingle(indArray);
             predictedObjects = outputLayer.getPredictedObjects(results, dT);
-            System.out.println("results = " + predictedObjects);
+            ObjectDetectorFromVideo.logger.log(Level.CONFIG , "results = {}", predictedObjects);
             markObjectWithBoundingBox(file, gW, gH, imageWidth, imageHeight);
         } else {
         	markObjectWithBoundingBox(file, gW, gH, imageWidth, imageHeight);
@@ -171,13 +171,13 @@ public class TinyYoloModel {
             double iox2 = Math.min(bottomRightXY[0], bottomRightXY1[0]);
             double ioy2 = Math.min(bottomRightXY[1], bottomRightXY1[1]);
 
-            double inter_area = (ioy2 - ioy1) * (iox2 - iox1);
+            double interArea = (ioy2 - ioy1) * (iox2 - iox1);
 
-            double box1_area = (bottomRightXY1[1] - topLeftXY1[1]) * (bottomRightXY1[0] - topLeftXY1[0]);
-            double box2_area = (bottomRightXY[1] - topLeftXY[1]) * (bottomRightXY[0] - topLeftXY[0]);
+            double box1Area = (bottomRightXY1[1] - topLeftXY1[1]) * (bottomRightXY1[0] - topLeftXY1[0]);
+            double box2Area = (bottomRightXY[1] - topLeftXY[1]) * (bottomRightXY[0] - topLeftXY[0]);
 
-            double union_area = box1_area + box2_area - inter_area;
-            double iou = inter_area / union_area;
+            double unionArea = box1Area + box2Area - interArea;
+            double iou = interArea / unionArea;
 
 
             if (iou > 0.5) {
