@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,8 +32,9 @@ import org.bytedeco.javacv.OpenCVFrameConverter;
  * @version 1.0.0 22/11/2018
  */
 
-public class ObjectDetectorFromVideo extends JFrame {
+public class ObjectDetectorFromVideo {
 	private AtomicReferenceArray v  = new AtomicReferenceArray(new Mat[1]);
+	JFrame ventana = new JFrame();
     JPanel panelContenido;
 	JButton documentSelector;
 	ActionListenerForODFV al;
@@ -66,14 +68,14 @@ public class ObjectDetectorFromVideo extends JFrame {
 		layout.setVerticalGroup(
 				layout.createSequentialGroup()
 				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(documentSelector)));
-		this.setContentPane(panelContenido);
-		this.setTitle("Detector de objetos en videos");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setLocation(0, 0);
-		pack();
-		setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
-		this.setResizable(true);
-		this.setVisible(true);
+		ventana.setContentPane(panelContenido);
+		ventana.setTitle("Detector de objetos en videos");
+		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ventana.setLocation(0, 0);
+		ventana.pack();
+		ventana.setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
+		ventana.setResizable(true);
+		ventana.setVisible(true);
         
 		
         
@@ -120,7 +122,11 @@ public class ObjectDetectorFromVideo extends JFrame {
 	
 }
 
-class ActionListenerForODFV implements ActionListener{
+class ActionListenerForODFV implements ActionListener, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2942844111063354876L;
 	private final JFileChooser fc = new JFileChooser();
 	protected String path;
 	private JPanel panelPadre;
