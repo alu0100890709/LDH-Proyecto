@@ -4,9 +4,9 @@ dist: trusty
 install: true
 addons:
   sonarcloud:
-    organization: "ldh-yolo-team"
+    organization: "alu0100890709-github"
     token:
-      secure: "2111eb579d4959d145da2959cf915f82275b3160"
+      secure: "1: "8918b6fcb78cf8fd790d3529e43773664c08c738"
 jdk:
   - oraclejdk8
 script:
@@ -22,7 +22,7 @@ cache:
 notifications:
   email: 
   recipients:
-    - eumadeinchina@gmail.com
+    - maestre1996@gmail.com
 on_success: always
 on_failure: always
 before_install:
