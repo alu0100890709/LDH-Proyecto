@@ -16,4 +16,4 @@ cámara en tiempo real.
 * Maven.
 * Eclipse.
 * SonarQube.
-* Tecnologías de integración continua.
+* Tecnologías de integración continua
