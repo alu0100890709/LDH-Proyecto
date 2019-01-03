@@ -13,7 +13,7 @@ cámara en tiempo real.
 
 ### Herramientas usadas
 
-* Maven.
+* Maven
 * Eclipse.
 * SonarQube.
 * Tecnologías de integración continua
